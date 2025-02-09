@@ -19,13 +19,20 @@
         "SubscriptionID": {
             "type": "string",
             "defaultValue": "[subscription().id]"
-        },    
+        },
         "automationRuleName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the automation rule that will be deployed.."
+                "description": "The name of the automation rule that will be deployed."
             },
-	    "defaultValue": "Automation Rule Name"
+            "defaultValue": "Automation Rule Name"
+        },
+        "automationRuleDisplayName": {
+            "type": "string",
+            "metadata": {
+                "description": "The display name of the automation rule."
+            },
+            "defaultValue": "My Automation Rule"
         }
     },
     "resources": [
@@ -34,7 +41,14 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',parameters('automationRuleName'))]",
             "apiVersion": "2019-01-01-preview",
             "properties": {
-                
+                "displayName": "[parameters('automationRuleDisplayName')]",
+                "severity": "High", 
+                "triggeringLogic": {
+                    "conditions": [],
+                    "triggersOn": "Incidents",
+                    "triggersWhen": "Created"
+                },
+                "actions": []
             }
         }
     ],
